@@ -1,0 +1,2 @@
+/* Only the host controls the entry curtain when embedded. */
+html[data-embedded="true"] #loader{display:none!important}

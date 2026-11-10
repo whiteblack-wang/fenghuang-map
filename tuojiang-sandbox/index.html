@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#e9e4d7" />
+    <meta
+      name="description"
+      content="凤凰古镇沱江段 · 一块可以拖拽、拨动与倾斜的果冻质感数字沙盘。"
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='6' width='52' height='52' rx='16' fill='%235b9d8a'/%3E%3Cpath d='M12 38c8-6 14 4 23-1s12-3 17-8' fill='none' stroke='%23eafaf1' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <title>凤凰古镇 · 沱江果冻沙盘</title>
+    <script src="integration.js"></script>
+    <script type="module" crossorigin src="./assets/index-DuMhezoN.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CH_C6FLi.css">
+      <link rel="stylesheet" href="integration.css">
+  </head>
+  <body data-flavor="dawn">
+    <main class="stage-shell" aria-label="凤凰古镇沱江果冻沙盘">
+      <canvas
+        id="scene"
+        aria-label="可交互的凤凰古镇沱江三维沙盘。拖动水面漾开波纹，拖动侧壁倾斜沙盘，拖动空白处环绕视角。"
+      ></canvas>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+    </main>
+
+    <header class="masthead">
+      <div class="crumb">
+        <span class="crumb-seal" aria-hidden="true">沱</span>
+        <span>凤凰古镇 <i>·</i> 数字沙盘</span>
+      </div>
+      <h1>沱江，<br /><span>一块会晃的山水</span></h1>
+      <p class="subtitle">一座可以上手的边城</p>
+    </header>
+
+    <nav class="flavors" aria-label="切换风味配色">
+      <span class="flavors-label">FLAVOUR · AUTO</span>
+      <div class="flavor-list">
+        <button
+          class="flavor"
+          type="button"
+          data-flavor="dawn"
+          aria-pressed="true"
+          aria-label="晨雾青绿"
+        >
+          <span class="flavor-swatch swatch-dawn" aria-hidden="true"></span>
+          <span class="flavor-name">晨雾</span>
+        </button>
+        <button
+          class="flavor"
+          type="button"
+          data-flavor="dusk"
+          aria-pressed="false"
+          aria-label="黄昏赭金"
+        >
+          <span class="flavor-swatch swatch-dusk" aria-hidden="true"></span>
+          <span class="flavor-name">黄昏</span>
+        </button>
+        <button
+          class="flavor"
+          type="button"
+          data-flavor="night"
+          aria-pressed="false"
+          aria-label="夜灯朱砂"
+        >
+          <span class="flavor-swatch swatch-night" aria-hidden="true"></span>
+          <span class="flavor-name">夜灯</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="season-strip" aria-label="四季">
+      <span class="season-label">SEASON</span>
+      <div class="season-list">
+        <button type="button" data-season="spring" aria-pressed="true" aria-label="春">春</button>
+        <button type="button" data-season="summer" aria-pressed="false" aria-label="夏">夏</button>
+        <button type="button" data-season="autumn" aria-pressed="false" aria-label="秋">秋</button>
+        <button type="button" data-season="winter" aria-pressed="false" aria-label="冬">冬</button>
+      </div>
+    </div>
+
+    <section class="counters" aria-label="沙盘计数">
+      <div class="counter">
+        <span class="counter-label">河灯</span>
+        <span class="counter-value" data-counter="lanterns">00</span>
+        <span class="counter-unit">盏</span>
+      </div>
+      <div class="counter">
+        <span class="counter-label">渡船</span>
+        <span class="counter-value" data-counter="boats">00</span>
+        <span class="counter-unit">航</span>
+      </div>
+      <div class="counter">
+        <span class="counter-label">钟声</span>
+        <span class="counter-value" data-counter="bells">00</span>
+        <span class="counter-unit">响</span>
+      </div>
+    </section>
+
+    <aside class="dock" id="dock" aria-label="可玩参数与操作">
+      <button
+        class="dock-handle"
+        id="dockHandle"
+        type="button"
+        aria-expanded="true"
+        aria-controls="dockBody"
+      >
+        <span class="dock-grip" aria-hidden="true"></span>
+        <span class="dock-title">水感</span>
+        <span class="dock-summary" id="dockSummary">柔度 0.55</span>
+        <svg class="dock-chevron" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="dock-body" id="dockBody">
+        <div class="mobile-flavours">
+          <span>风味 · 自动</span>
+          <div class="mobile-flavour-btns">
+            <button type="button" data-flavor="dawn" aria-pressed="true">晨雾</button>
+            <button type="button" data-flavor="dusk" aria-pressed="false">黄昏</button>
+            <button type="button" data-flavor="night" aria-pressed="false">夜灯</button>
+          </div>
+        </div>
+
+        <div class="mobile-seasons">
+          <span>季节 · Y</span>
+          <div class="mobile-season-btns">
+            <button type="button" data-season="spring" aria-pressed="true">春</button>
+            <button type="button" data-season="summer" aria-pressed="false">夏</button>
+            <button type="button" data-season="autumn" aria-pressed="false">秋</button>
+            <button type="button" data-season="winter" aria-pressed="false">冬</button>
+          </div>
+        </div>
+
+        <div class="dock-counters">
+          <div class="counter">
+            <span class="counter-label">河灯</span>
+            <span class="counter-value" data-counter="lanterns">00</span>
+            <span class="counter-unit">盏</span>
+          </div>
+          <div class="counter">
+            <span class="counter-label">渡船</span>
+            <span class="counter-value" data-counter="boats">00</span>
+            <span class="counter-unit">航</span>
+          </div>
+          <div class="counter">
+            <span class="counter-label">钟声</span>
+            <span class="counter-value" data-counter="bells">00</span>
+            <span class="counter-unit">响</span>
+          </div>
+        </div>
+
+        <div class="sliders">
+          <label class="slider" for="firmness">
+            <span class="slider-head">
+              <span>柔度</span>
+              <output id="firmnessOut" for="firmness">0.55</output>
+            </span>
+            <input
+              id="firmness"
+              type="range"
+              min="0.2"
+              max="1"
+              step="0.01"
+              value="0.55"
+              aria-label="柔度，低值像稠糖浆，高值更清脆"
+            />
+            <span class="slider-ends"><span>稠</span><span>脆</span></span>
+          </label>
+
+          <label class="slider" for="damping">
+            <span class="slider-head">
+              <span>涟漪阻尼</span>
+              <output id="dampingOut" for="damping">0.50</output>
+            </span>
+            <input
+              id="damping"
+              type="range"
+              min="0.1"
+              max="1"
+              step="0.01"
+              value="0.5"
+              aria-label="涟漪阻尼，低值波纹久久不散，高值一触即消"
+            />
+            <span class="slider-ends"><span>久</span><span>消</span></span>
+          </label>
+
+          <label class="slider" for="tide">
+            <span class="slider-head">
+              <span>潮位</span>
+              <output id="tideOut" for="tide">0.00</output>
+            </span>
+            <input
+              id="tide"
+              type="range"
+              min="-0.4"
+              max="0.4"
+              step="0.01"
+              value="0"
+              aria-label="潮位，负值露出河滩，正值淹过驳岸"
+            />
+            <span class="slider-ends"><span>露</span><span>涨</span></span>
+          </label>
+        </div>
+
+        <div class="dock-rule" aria-hidden="true"></div>
+
+        <div class="dock-actions" role="group" aria-label="沙盘操作">
+          <button class="action" type="button" data-action="level" aria-label="回正沙盘">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 10a6 6 0 1 0 1.8-4.3M4 3.8v3.6h3.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>回正</span>
+          </button>
+          <button class="action" type="button" data-action="pause" aria-label="暂停或播放微动" aria-pressed="false">
+            <svg class="icon-pause" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M6.5 4.5v11M13.5 4.5v11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+            <span class="action-label">暂停</span>
+          </button>
+          <button class="action" type="button" data-action="sound" aria-label="开启或关闭环境声" aria-pressed="false">
+            <svg class="icon-sound" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 8h2.7L10 5.2v9.6L6.7 12H4z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+              <path class="sound-wave" d="M12.2 7.4a3.4 3.4 0 0 1 0 5.2M14.4 5.4a6.3 6.3 0 0 1 0 9.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+            <span>声音</span>
+          </button>
+          <button class="action" type="button" data-action="reset-view" aria-label="重置视角">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M3.8 8.2 10 3.6l6.2 4.6v7H3.8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+              <path d="M8 15.2v-4.1h4v4.1" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+            </svg>
+            <span>视角</span>
+          </button>
+        </div>
+
+        <p class="dock-note">让水慢一点，或让它更清脆。</p>
+      </div>
+    </aside>
+
+    <div class="radial-menu" id="radialMenu" aria-label="圆形操作菜单">
+      <button class="radial-toggle" id="radialToggle" type="button" aria-expanded="false" aria-controls="radialItems" aria-label="展开操作菜单">
+        <span aria-hidden="true">✦</span>
+      </button>
+      <div class="radial-items" id="radialItems">
+        <button class="radial-action radial-0" type="button" data-action="level" aria-label="回正沙盘">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10a6 6 0 1 0 1.8-4.3M4 3.8v3.6h3.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <span>回正</span>
+        </button>
+        <button class="radial-action radial-1" type="button" data-action="pause" aria-label="暂停或播放微动" aria-pressed="false">
+          <svg class="icon-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 4.5v11M13.5 4.5v11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
+          <span class="action-label">暂停</span>
+        </button>
+        <button class="radial-action radial-2" type="button" data-action="sound" aria-label="开启或关闭环境声" aria-pressed="false">
+          <svg class="icon-sound" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 8h2.7L10 5.2v9.6L6.7 12H4z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" /><path class="sound-wave" d="M12.2 7.4a3.4 3.4 0 0 1 0 5.2M14.4 5.4a6.3 6.3 0 0 1 0 9.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" /></svg>
+          <span>声音</span>
+        </button>
+        <button class="radial-action radial-3" type="button" data-action="reset-view" aria-label="重置视角">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.8 8.2 10 3.6l6.2 4.6v7H3.8z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" /><path d="M8 15.2v-4.1h4v4.1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" /></svg>
+          <span>视角</span>
+        </button>
+      </div>
+    </div>
+
+    <p class="hint" aria-hidden="true">
+      <span>拖动江水</span><i>·</i><span>点击塔身</span><i>·</i><span>拨动石墩</span>
+    </p>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="loader" id="loader" aria-label="正在载入沙盘">
+      <div class="loader-glow" aria-hidden="true"></div>
+      <div class="loader-inner">
+        <p class="loader-kicker">FENGHUANG&nbsp;&nbsp;/&nbsp;&nbsp;TUOJIANG</p>
+        <div class="loader-jelly" aria-hidden="true">
+          <span class="loader-cube">
+            <span class="loader-face face-front"></span>
+            <span class="loader-face face-side"></span>
+            <span class="loader-face face-top"></span>
+            <span class="loader-bubble b1"></span>
+            <span class="loader-bubble b2"></span>
+          </span>
+          <span class="loader-shadow"></span>
+        </div>
+        <div class="loader-progress">
+          <span class="loader-word" id="loaderWord">正在凝聚</span>
+          <span class="loader-pct" id="loaderPct">00%</span>
+        </div>
+        <div class="loader-rail" aria-hidden="true"><i id="loaderBar"></i></div>
+        <p class="loader-sub">拖一拖，它会晃。</p>
+      </div>
+    </div>
+
+    <noscript>
+      <div class="nojs">这只果冻沙盘需要 JavaScript 才能凝固。</div>
+    </noscript>
+
+  </body>
+</html>

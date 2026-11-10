@@ -1,0 +1,31 @@
+/* Optional sandbox entry. The existing two mode cards retain their layout. */
+.mode-cards>.mode-card,.mode-cards>.explore-mode-option{flex:1 1 50%;min-width:0}
+.explore-mode-option{position:relative;flex:1;min-width:0;height:100%;display:flex}
+.explore-mode-option>.mode-card{width:100%;height:100%;min-width:0}
+.tuojiang-entry{position:absolute;z-index:5;right:24px;bottom:88px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 14px;border:1px solid #f6f5dfb3;border-radius:24px;background:#f5f8e5e8;color:#41644b;font-size:12px;letter-spacing:.6px;white-space:nowrap;box-shadow:0 4px 16px #263f302b;cursor:pointer}
+.tuojiang-entry .icon{width:17px;height:17px}.tuojiang-entry:focus-visible{outline:2px solid #416b4d;outline-offset:4px}.tuojiang-entry:active{background:#e1ead6}
+.tuojiang-experience{position:fixed;z-index:600;inset:0;width:100%;height:100%;height:100dvh;background:#000;isolation:isolate;overflow:hidden;color:#e1c17d}
+.tuojiang-experience[hidden]{display:none}
+body.tuojiang-open>.welcome,body.tuojiang-open>.app,body.tuojiang-open>.guide-companion{visibility:hidden}
+.tuojiang-frame-host,.tuojiang-frame{position:absolute;inset:0;width:100%;height:100%;border:0;margin:0;display:block;background:#ece6d9}
+.tuojiang-frame-host{pointer-events:none}.tuojiang-experience[data-state="active"] .tuojiang-frame-host{pointer-events:auto}
+.tuojiang-intro{position:absolute;z-index:2;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:30px;background:#000;transition:opacity .55s ease,visibility .55s ease}
+.tuojiang-intro h2{margin:0;padding-left:.2em;color:#dfbf79;font-family:"STSong","Songti SC","SimSun",serif;font-size:clamp(24px,5.5vw,40px);font-weight:400;letter-spacing:.2em;line-height:1.6;text-align:center;text-shadow:0 0 22px #d8b35b1f;animation:tuojiang-title-in .65s ease both}
+.tuojiang-intro-line{width:56px;height:1px;background:linear-gradient(90deg,transparent,#c8a965,transparent);animation:tuojiang-line-in 1.6s ease both}
+.tuojiang-load-status{position:absolute;bottom:calc(42px + env(safe-area-inset-bottom,0px));left:24px;right:24px;margin:0;text-align:center;font-size:12px;color:#b39a69;letter-spacing:1px;line-height:1.9}
+.tuojiang-experience[data-state="active"] .tuojiang-intro{opacity:0;visibility:hidden;pointer-events:none}
+.tuojiang-back{position:absolute;z-index:5;top:calc(16px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);min-height:44px;min-width:112px;padding:10px 16px;border:1px solid #d2b77966;border-radius:24px;background:#15130ddb;color:#dec182;font-size:12px;cursor:pointer}
+.tuojiang-experience[data-state="active"] .tuojiang-back{background:#f6f3e8eb;border-color:#c6d0b4;color:#365847;box-shadow:0 3px 14px #274a3020}
+.tuojiang-back:focus-visible,.tuojiang-retry:focus-visible{outline:2px solid #ddbd75;outline-offset:4px}
+.tuojiang-error{position:absolute;z-index:3;top:58%;left:50%;transform:translateX(-50%);width:min(340px,calc(100% - 44px));text-align:center;color:#c9b286;font-size:13px;line-height:1.9}
+.tuojiang-error[hidden]{display:none}.tuojiang-error p{margin:0 0 18px}
+.tuojiang-retry{min-width:112px;min-height:44px;border:1px solid #b99556;border-radius:24px;background:#b995561c;color:#e0c68b;font-size:13px;cursor:pointer}
+@keyframes tuojiang-title-in{from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
+@keyframes tuojiang-line-in{from{opacity:0;transform:scaleX(.25)}to{opacity:1;transform:scaleX(1)}}
+@media(max-width:680px){
+ .tuojiang-entry{right:12px;left:12px;bottom:88px;padding:8px 9px;gap:6px;font-size:11px;letter-spacing:0;min-height:44px}
+ .tuojiang-entry .icon{width:15px;height:15px}.tuojiang-back{left:auto;right:12px;top:calc(12px + env(safe-area-inset-top,0px));transform:none;min-width:102px;padding-inline:12px}
+ .tuojiang-load-status{bottom:calc(30px + env(safe-area-inset-bottom,0px));font-size:11px}
+}
+@media(max-width:360px){.tuojiang-entry{padding-inline:7px;gap:4px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.tuojiang-intro{transition:none}.tuojiang-intro h2,.tuojiang-intro-line{animation:none}}

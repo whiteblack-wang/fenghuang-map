@@ -2,8 +2,13 @@
 .mode-cards>.mode-card,.mode-cards>.explore-mode-option{flex:1 1 50%;min-width:0}
 .explore-mode-option{position:relative;flex:1;min-width:0;height:100%;display:flex}
 .explore-mode-option>.mode-card{width:100%;height:100%;min-width:0}
-.tuojiang-entry{position:absolute;z-index:5;right:24px;bottom:88px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 14px;border:1px solid #f6f5dfb3;border-radius:24px;background:#f5f8e5e8;color:#41644b;font-size:12px;letter-spacing:.6px;white-space:nowrap;box-shadow:0 4px 16px #263f302b;cursor:pointer}
-.tuojiang-entry .icon{width:17px;height:17px}.tuojiang-entry:focus-visible{outline:2px solid #416b4d;outline-offset:4px}.tuojiang-entry:active{background:#e1ead6}
+.tuojiang-entry{position:absolute;z-index:5;isolation:isolate;left:0;top:calc(100% + 14px);display:flex;align-items:center;justify-content:center;gap:9px;min-height:56px;padding:4px 16px 4px 9px;border:1px solid #d8c28be6;border-radius:30px;background:linear-gradient(120deg,#fffdf1f5,#edf5dfef);color:#365c45;font-size:13px;font-weight:600;letter-spacing:.6px;white-space:nowrap;box-shadow:0 5px 18px #536e4930,inset 0 1px 0 #fff;cursor:pointer}
+.tuojiang-entry::before{content:"";position:absolute;z-index:-1;inset:-5px;border:1px solid #dbc18573;border-radius:inherit;box-shadow:0 0 18px 4px #e5c47936;pointer-events:none;animation:tuojiang-entry-halo 3.6s ease-in-out infinite}
+.tuojiang-entry::after{content:"";position:absolute;z-index:-1;right:-20px;top:8px;width:42px;height:42px;border-radius:50%;background:radial-gradient(circle,#fff1b3a3 0%,#e9c47f4d 36%,#e9c47f00 73%);pointer-events:none;animation:tuojiang-entry-light 3.6s ease-in-out infinite}
+.tuojiang-sandbox-icon{display:block;width:54px;height:46px;flex:none}.tuojiang-entry-arrow{color:#a18143;font-size:16px;margin-left:2px}.tuojiang-entry:focus-visible{outline:2px solid #416b4d;outline-offset:7px}.tuojiang-entry:hover{background:#fffdec;border-color:#bda063}.tuojiang-entry:active{background:#e1ead6}
+@keyframes tuojiang-entry-halo{0%,100%{opacity:.42;transform:scale(.99)}50%{opacity:1;transform:scale(1.025)}}
+@keyframes tuojiang-entry-light{0%,100%{opacity:.42;transform:scale(.88)}50%{opacity:.92;transform:scale(1.18)}}
+body:not([data-screen="landing"]) .tuojiang-entry::before,body:not([data-screen="landing"]) .tuojiang-entry::after{animation-play-state:paused}
 .tuojiang-experience{position:fixed;z-index:600;inset:0;width:100%;height:100%;height:100dvh;background:#000;isolation:isolate;overflow:hidden;color:#e1c17d}
 .tuojiang-experience[hidden]{display:none}
 body.tuojiang-open>.welcome,body.tuojiang-open>.app,body.tuojiang-open>.guide-companion{visibility:hidden}
@@ -23,9 +28,12 @@ body.tuojiang-open>.welcome,body.tuojiang-open>.app,body.tuojiang-open>.guide-co
 @keyframes tuojiang-title-in{from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
 @keyframes tuojiang-line-in{from{opacity:0;transform:scaleX(.25)}to{opacity:1;transform:scaleX(1)}}
 @media(max-width:680px){
- .tuojiang-entry{right:12px;left:12px;bottom:88px;padding:8px 9px;gap:6px;font-size:11px;letter-spacing:0;min-height:44px}
- .tuojiang-entry .icon{width:15px;height:15px}.tuojiang-back{left:auto;right:12px;top:calc(12px + env(safe-area-inset-top,0px));transform:none;min-width:102px;padding-inline:12px}
+ .tuojiang-entry{top:calc(100% + 8px);padding:3px 13px 3px 7px;gap:7px;font-size:12px;letter-spacing:.5px;min-height:50px}
+ .tuojiang-sandbox-icon{width:46px;height:42px}.tuojiang-entry-arrow{font-size:14px}.tuojiang-back{left:auto;right:12px;top:calc(12px + env(safe-area-inset-top,0px));transform:none;min-width:102px;padding-inline:12px}
+ .welcome-intro{top:138px;width:100%;padding:0 15px}.welcome-intro .spaced-label{font-size:7px;letter-spacing:2px;margin-bottom:9px}.welcome-intro h1{font-size:28px;letter-spacing:3px}.welcome-intro .welcome-subtitle{font-size:11px;letter-spacing:2px;margin:9px 0}.welcome-intro .welcome-subtitle span{width:16px;margin-inline:8px}
+ .mode-cards{top:238px;height:min(430px,calc(100dvh - 332px))}
  .tuojiang-load-status{bottom:calc(30px + env(safe-area-inset-bottom,0px));font-size:11px}
 }
-@media(max-width:360px){.tuojiang-entry{padding-inline:7px;gap:4px;font-size:10px}}
-@media(prefers-reduced-motion:reduce){.tuojiang-intro{transition:none}.tuojiang-intro h2,.tuojiang-intro-line{animation:none}}
+@media(min-width:681px) and (max-height:520px){.welcome-header{top:12px}.welcome-header .wordmark span{font-size:23px;letter-spacing:3px}.welcome-header .wordmark small{font-size:7px}.welcome-header .wordmark em{font-size:8px;letter-spacing:1px}.tuojiang-entry{top:calc(100% + 8px);min-height:44px;padding-block:2px;font-size:12px}.tuojiang-sandbox-icon{width:40px;height:36px}}
+@media(max-width:680px) and (max-height:500px) and (orientation:landscape){.tuojiang-entry{top:calc(100% + 2px);min-height:44px;padding-block:2px}.tuojiang-sandbox-icon{width:40px;height:36px}.welcome-intro{top:18px;left:210px;right:55px;width:auto;padding:0}.welcome-intro .spaced-label{font-size:6px;letter-spacing:1px;margin-bottom:5px}.welcome-intro h1{font-size:21px;letter-spacing:1px}.welcome-intro .welcome-subtitle{font-size:9px;letter-spacing:1px;margin:7px 0}.mode-cards{top:122px;height:calc(100dvh - 188px)}}
+@media(prefers-reduced-motion:reduce){.tuojiang-intro{transition:none}.tuojiang-intro h2,.tuojiang-intro-line,.tuojiang-entry::before,.tuojiang-entry::after{animation:none}}

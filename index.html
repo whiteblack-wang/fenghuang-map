@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="scene-upgrade.css">
   <link rel="stylesheet" href="scene-ui.css">
   <link rel="stylesheet" href="scene-refine.css">
-  <link rel="stylesheet" href="tuojiang-experience.css">
+  <link rel="stylesheet" href="tuojiang-experience.css?v=entry-2">
   <link rel="stylesheet" href="bridge3d.css">
   <script defer src="data/places.js"></script>
   <script defer src="app.js"></script>
@@ -47,11 +47,27 @@
   <section class="welcome" id="welcome" aria-labelledby="welcome-title">
     <img class="welcome-landscape" src="assets/scene-spring.webp" alt="沱江与古城山水艺术场景" fetchpriority="high">
     <div class="welcome-wash"></div><div class="petals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <header class="welcome-header"><a class="wordmark" href="#" aria-label="凤凰古城首页"><span>凤凰古城<i>湘西</i></span><small>FENGHUANG ANCIENT TOWN</small><em>把目光，留在两岸。</em></a><nav class="welcome-nav" aria-label="体验导航"><span class="current">⌂ &nbsp; 古城漫游</span><span>山水相逢 · 低碳同行</span></nav><button class="round-button fullscreen-button" aria-label="进入全屏" title="进入全屏">⛶</button></header>
+    <header class="welcome-header"><a class="wordmark" href="#" aria-label="凤凰古城首页"><span>凤凰古城<i>湘西</i></span><small>FENGHUANG ANCIENT TOWN</small><em>把目光，留在两岸。</em></a>
+      <button type="button" class="tuojiang-entry" id="open-tuojiang" aria-label="体验会动的沱江，进入互动沙盘">
+        <svg class="tuojiang-sandbox-icon" viewBox="0 0 64 54" aria-hidden="true">
+          <path d="m5 30 27 14v6L5 36Z" fill="#94b6a1"/><path d="m32 44 27-14v6L32 50Z" fill="#668f7b"/>
+          <path d="m5 30 27-14 27 14-27 14Z" fill="#dce8bd" stroke="#a5bb8b" stroke-width=".8"/>
+          <path d="m23 21 9-5 7 4c-7 4-10 7-5 10l16 5-11 6-15-8c-5-3-6-7-1-12Z" fill="#79b9a5"/>
+          <path d="m30 21-5 4c-3 4 2 6 8 9l8 3" fill="none" stroke="#d2f0de" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="m21 26 18 9v5l-4-2v-2l-3-1v2l-4-2v-2l-3-1v2l-4-2Z" fill="#c6ad75"/>
+          <path d="m22 22 19 9v4l-19-9Z" fill="#a77a50"/><path d="m25 24 1 4m4-2 1 4m4-2 1 4" stroke="#f4d8a0" stroke-width="1.2"/>
+          <path d="m18 21 7-5 22 11-7 4Z" fill="#426f5b"/><path d="m18 21 22 10 7-4" fill="none" stroke="#d5c58c" stroke-width="1.1" stroke-linejoin="round"/>
+          <path d="m11 27 7 3v6l-7-3Z" fill="#b38b5b"/><path d="m8 27 6-6 8 4-4 5Z" fill="#5d8865"/>
+          <path d="M50 27v6" stroke="#8e8052" stroke-width="1.5"/><path d="m45 26 5-11 5 11Z" fill="#77996c"/><path d="m46 22 4-9 4 9Z" fill="#97b47c"/>
+          <path d="m53 8 1.5 3.5L58 13l-3.5 1.5L53 18l-1.5-3.5L48 13l3.5-1.5Z" fill="#c3a257"/>
+        </svg>
+        <span>沱江互动沙盘</span><span class="tuojiang-entry-arrow" aria-hidden="true">↗</span>
+      </button>
+      <nav class="welcome-nav" aria-label="体验导航"><span class="current">⌂ &nbsp; 古城漫游</span><span>山水相逢 · 低碳同行</span></nav><button class="round-button fullscreen-button" aria-label="进入全屏" title="进入全屏">⛶</button></header>
     <div class="welcome-intro"><p class="spaced-label">A SLOW JOURNEY THROUGH FENGHUANG</p><h1 id="welcome-title">选择你的探索模式</h1><p class="welcome-subtitle"><span></span>以不同的方式，遇见不一样的凤凰<span></span></p></div>
     <div class="mode-cards">
       <button class="mode-card cinematic" data-enter-mode="panorama" aria-label="开启全景之旅，写实光影风格"><img src="assets/preview-cinematic.webp" alt="黛瓦与暖色光影中的古城全景"><span class="mode-card-shade"></span><span class="mode-top"><span class="mode-symbol">◈</span><span><b>全景模式</b><small>沉浸式山水画卷，感受古城之美</small></span></span><span class="mode-bottom"><span class="mode-tags">写实光影 <i>·</i> 山水长卷</span><span class="enter-label">开启全景之旅 <span>→</span></span></span><span class="corner-ornament" aria-hidden="true">✦</span></button>
-      <div class="explore-mode-option"><button class="mode-card fresh" data-enter-mode="explore" aria-label="进入探索地图，清新明丽风格"><img src="assets/preview-spring.webp" alt="花木与碧水环绕的清新古城"><span class="mode-card-shade"></span><span class="recommended">✿ &nbsp; 推荐</span><span class="mode-top"><span class="mode-symbol">❀</span><span><b>探索模式</b><small>自由探索古城，发现更多精彩</small></span></span><span class="mode-bottom"><span class="mode-tags">清新明丽 <i>·</i> 漫游四季</span><span class="enter-label">进入探索地图 <span>→</span></span></span><span class="corner-ornament" aria-hidden="true">✦</span></button><button type="button" class="tuojiang-entry" id="open-tuojiang" aria-label="体验会动的沱江，进入互动沙盘"><svg class="icon" aria-hidden="true"><use href="#i-water"/></svg><span>沱江互动沙盘</span><span aria-hidden="true">↗</span></button></div>
+      <div class="explore-mode-option"><button class="mode-card fresh" data-enter-mode="explore" aria-label="进入探索地图，清新明丽风格"><img src="assets/preview-spring.webp" alt="花木与碧水环绕的清新古城"><span class="mode-card-shade"></span><span class="recommended">✿ &nbsp; 推荐</span><span class="mode-top"><span class="mode-symbol">❀</span><span><b>探索模式</b><small>自由探索古城，发现更多精彩</small></span></span><span class="mode-bottom"><span class="mode-tags">清新明丽 <i>·</i> 漫游四季</span><span class="enter-label">进入探索地图 <span>→</span></span></span><span class="corner-ornament" aria-hidden="true">✦</span></button></div>
     </div>
     <div class="welcome-footer"><span class="footer-leaf">❧</span><span>低碳出行 · 守护古城的诗意与绿意</span><span class="footer-separator"></span><small>轻触风景，慢慢遇见</small></div>
     <p class="welcome-note">艺术场景示意 · 景点位置待核实</p><p class="rotate-hint">↻ 横屏游览，山水更开阔</p>

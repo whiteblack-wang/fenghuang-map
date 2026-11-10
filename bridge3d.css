@@ -1,0 +1,63 @@
+/* Isolated scene overrides: preserve the surrounding map's visual design. */
+.bridge-view {height:100%;height:100dvh;isolation:isolate;}
+.bridge-view:focus {outline:none;}
+.bridge-header {top:max(16px,env(safe-area-inset-top));left:max(20px,env(safe-area-inset-left));right:max(20px,env(safe-area-inset-right));pointer-events:none;}
+.bridge-header button {pointer-events:auto;min-height:44px;min-width:44px;}
+.bridge-header>div {position:absolute;left:50%;transform:translateX(-50%);width:max-content;max-width:55%;}
+.bridge-header h1 {font-size:30px;letter-spacing:7px;}
+.bridge-header p {letter-spacing:1px;font-size:11px;line-height:1.5;margin-top:5px;}
+.bridge-header .round-button {margin-left:auto;}
+.bridge-view .time-switch {top:83px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.bridge-view .time-switch button {min-width:58px;min-height:44px;cursor:pointer;}
+.bridge-view .bridge-stops {max-width:calc(100% - 20px);bottom:max(16px,env(safe-area-inset-bottom));gap:5px;padding:6px 9px;}
+.bridge-stops>span {display:none;}
+.bridge-view .bridge-stops button {min-width:67px;min-height:44px;padding:8px;white-space:nowrap;}
+.bridge-view .bridge-stops #bridge-reset {min-width:44px;min-height:44px;}
+.bridge-view .bridge-stops small {margin-right:4px;}
+.bridge-location {bottom:98px;pointer-events:none;}
+.bridge-location h2 {font-size:24px;}
+.bridge-help {bottom:92px;pointer-events:none;}
+.bridge-vignette {background:linear-gradient(180deg,#10212945,transparent 23%,transparent 76%,#071a1e65);}
+.bridge-asset-note {position:absolute;left:50%;top:150px;transform:translateX(-50%);font-size:11px;background:#17362dcc;color:#fff4d7;padding:9px 14px;border-radius:15px;}
+.bridge-view[data-time="day"] .bridge-header h1,.bridge-view[data-time="day"] .bridge-location {text-shadow:0 2px 8px #153b35;}
+.bridge-view .bridge-error {width:min(340px,calc(100% - 32px));}
+.bridge-view .bridge-error button {min-height:44px;}
+@media(max-height:500px) and (orientation:landscape) {
+  .bridge-header {top:max(9px,env(safe-area-inset-top));}
+  .bridge-header h1 {font-size:23px;}
+  .bridge-header p {font-size:10px;margin:2px 0 0;}
+  .bridge-view .time-switch {top:65px;left:auto;right:max(18px,env(safe-area-inset-right));transform:none;flex-direction:column;padding:3px;gap:2px;}
+  .bridge-view .time-switch button {width:57px;height:44px;min-width:57px;font-size:16px;}
+  .bridge-location {bottom:80px;left:max(18px,env(safe-area-inset-left));}
+  .bridge-location>span,.bridge-location p {display:none;}
+  .bridge-location h2 {font-size:19px;margin:0;}
+  .bridge-help {left:max(18px,env(safe-area-inset-left));right:auto;top:65px;bottom:auto;padding:8px 10px;font-size:9px;}
+  .bridge-view .bridge-stops {bottom:max(9px,env(safe-area-inset-bottom));}
+}
+@media(max-width:600px) and (orientation:portrait) {
+  .bridge-view:after {display:none;}
+  .bridge-header {left:10px;right:10px;top:max(12px,env(safe-area-inset-top));}
+  .bridge-header>div {top:55px;max-width:94%;}
+  .bridge-header h1 {font-size:27px;}
+  .bridge-header p {font-size:10px;}
+  .bridge-view .time-switch {top:140px;}
+  .bridge-view .bridge-stops {width:calc(100% - 16px);gap:2px;padding:5px;bottom:max(12px,env(safe-area-inset-bottom));}
+  .bridge-view .bridge-stops button {flex:1;min-width:0;padding:7px 4px;font-size:11px;}
+  .bridge-view .bridge-stops small {display:none;}
+  .bridge-view .bridge-stops #bridge-reset {flex:0 0 44px;}
+  .bridge-location {left:18px;bottom:128px;}
+  .bridge-location h2 {font-size:22px;margin:7px 0;}
+  .bridge-location span {font-size:8px;letter-spacing:2px;}
+  .bridge-location p {font-size:11px;}
+  .bridge-help {left:18px;right:auto;bottom:77px;background:transparent;padding:0;border:0;box-shadow:none;backdrop-filter:none;}
+  .bridge-help small {display:inline;margin-left:8px;}
+  .bridge-asset-note {top:206px;width:max-content;max-width:90%;}
+}
+@media(prefers-reduced-motion:reduce){.bridge-view * {scroll-behavior:auto;}}
+/* Tall pagoda: keep the time controls away from its roof in wide desktop views. */
+@media(min-height:501px) and (orientation:landscape) {
+  .bridge-view[data-scene="wanming"] .time-switch {left:auto;right:24px;transform:none;top:90px;flex-direction:column;}
+}
+@media(max-height:650px) and (orientation:portrait) {
+  .bridge-view[data-scene="wanming"] .bridge-location {display:none;}
+}

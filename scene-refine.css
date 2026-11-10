@@ -1,0 +1,82 @@
+/* Second-round refinements, scoped to the 2.5D map; original palette intact. */
+.mode-menu{display:contents}#mode-toggle{display:none}
+.scene-occlusion{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.scene-occlusion .scene-region{transition:none}
+.scene-effects{z-index:3}.scene-occlusion{z-index:4}
+.app .scene-interactions{z-index:5}.app .hotspots{z-index:6}
+.app .glass,.app .search-wrap,.app .filter,.app .pin-label{box-shadow:0 7px 24px #28483513,inset 0 1px 0 #ffffff82}
+.app .hotspot .pin-icon,.app .hotspot .pin-label{transition:background .25s,color .25s,box-shadow .3s,opacity .3s}
+.app .hotspots.has-selection .hotspot:not(.selected) .pin-icon{opacity:.75}
+.app .hotspot.selected .pin-icon{box-shadow:0 0 17px #d7bf7766,0 4px 12px #3c604227}
+.app .place-card,.app .detail-dialog{animation:scene-card-open .32s cubic-bezier(.22,.7,.2,1)}
+.app .card-english{color:#68775f}.app .card-description{color:#496345;font-size:13px}
+.app .detail-copy>p{color:#496345;font-size:14px}
+.app .map-viewport::after{background:linear-gradient(90deg,#f3f6e921,transparent 23%),linear-gradient(0deg,#edf3e417,transparent 16%)}
+.app .card-visual::after{background:linear-gradient(transparent 65%,#243c2333)}
+.app .water-flow{opacity:.65;animation-duration:64s}
+.scene-loading{top:auto;bottom:96px;padding:8px 15px;font-size:11px;pointer-events:none}
+.guide-companion.mode-obscured{visibility:hidden}
+@keyframes scene-card-open{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
+@media(max-width:680px){
+ .app .header{pointer-events:none}.app .header button,.app .search-wrap,.app .filters,.app .search-results{pointer-events:auto}
+ .app.search-open .header{pointer-events:auto}
+ .app .literary-title{font-size:16px;letter-spacing:1.4px;color:#355d48}
+ .app .scene-toolbar{top:calc(88px + env(safe-area-inset-top,0px));left:16px;right:auto;gap:4px;padding:4px;min-height:52px;border-radius:28px}
+ .app.search-open .scene-toolbar{top:calc(88px + env(safe-area-inset-top,0px));visibility:hidden}
+ .app.mode-menu-open .map-controls,.app.season-menu-open .map-controls{visibility:hidden}
+ .app #mode-toggle{display:block;min-width:80px;min-height:44px;border-radius:22px;font-size:12px;color:#355d48}
+ .app .mode-menu{display:none;position:absolute;top:calc(100% + 8px);left:0;padding:6px;border-radius:22px;background:#f5f9eaf5;border:1px solid var(--scene-border);box-shadow:var(--scene-shadow);white-space:nowrap}
+ .app .scene-toolbar.mode-open .mode-menu{display:flex;align-items:center;gap:5px}
+ .app .scene-toolbar .mode-switch button{min-width:52px;font-size:12px}
+ .app .scene-toolbar #choose-mode{font-size:11px;padding-inline:9px}
+ .app #season-toggle{font-size:13px;min-width:44px}
+ .app .season-switch{left:0;right:auto}
+ .app .map-controls,.app.has-card .map-controls{top:calc(156px + env(safe-area-inset-top,0px));padding:2px;background:#fbfdf1b8}
+ .app .place-card{bottom:calc(82px + var(--safe-bottom));max-height:35dvh;grid-template-columns:76px minmax(0,1fr);padding:8px;border-radius:20px;background:#fbfdf1df}
+ .app .card-visual{min-height:148px}.app .card-body{padding-left:11px}
+ .app .card-heading h2{font-size:22px}.app .card-english{font-size:8px}
+ .app .card-description{font-size:12px;line-height:1.65;letter-spacing:0;margin:9px 0 10px}
+ .app .detail-button,.app .explore-button{font-size:11px;min-height:44px}
+ .app .bottom-bar{height:calc(68px + var(--safe-bottom));background:#f6faeac2}
+ .app .nav-item{height:54px;min-width:66px}.app .nav-item>small{font-size:8px}
+ .app .map-badge{bottom:calc(72px + var(--safe-bottom));font-size:8px}
+ .app .detail-dialog{bottom:calc(76px + var(--safe-bottom));max-height:66dvh;background:#f9fceef5}
+ .app .detail-copy>p{font-size:14px;line-height:1.85}
+ .app .filter{box-shadow:none;background:#fbfdf1b8}.app .filter.active{background:#41674e}
+ .app .search-results .search-result{min-height:44px}
+ body[data-screen="map"] .guide-companion{top:calc(152px + env(safe-area-inset-top,0px))}
+ body[data-screen="map"] .guide-bubble{width:176px;padding:10px 12px}
+ body[data-screen="map"] .guide-bubble p{font-size:12px;line-height:1.6}
+ .scene-loading{bottom:calc(78px + var(--safe-bottom));font-size:10px}
+}
+@media(max-width:680px) and (max-height:700px){
+ .app .place-card{grid-template-columns:64px minmax(0,1fr);max-height:35dvh}
+ .app .card-heading h2{font-size:20px}.app .card-visual{min-height:146px}
+ .app .card-english{font-size:7px}.app .card-description{font-size:12px}
+ .app .map-controls,.app.has-card .map-controls{top:150px}
+ body[data-screen="map"] .guide-bubble{max-width:calc(100vw - 178px)}
+}
+@media(min-width:681px) and (max-height:520px){
+ .app .card-description{font-size:12px}.app .place-card{max-height:calc(100dvh - 142px)}
+ .app .detail-dialog{bottom:82px;max-height:calc(100dvh - 154px)}
+ .app .season-caption{display:none}.scene-loading{bottom:12px}
+}
+/* A wide phone is still a phone: collapse search and modes in landscape too. */
+@media(min-width:681px) and (max-width:1000px) and (max-height:520px){
+ .app .map-search-toggle{display:grid;place-items:center;position:fixed;top:18px;right:70px;width:44px;height:44px;border-radius:50%;border:1px solid var(--scene-border);background:var(--scene-glass)}
+ .app:not(.search-open) .header .search-wrap,.app:not(.search-open) .filters,.app:not(.search-open) .search-results{display:none}
+ .app.search-open .header{padding:10px;width:260px;border-radius:18px;background:#f9fcedf5;border:1px solid var(--scene-border);z-index:25}
+ .app .scene-toolbar{left:50%;right:auto;transform:translateX(-50%);min-height:52px;padding:4px;gap:4px}
+ .app .scene-toolbar .toolbar-line{display:none}.app #mode-toggle{display:block;min-width:80px;min-height:44px;font-size:12px;border-radius:22px}
+ .app #season-toggle{display:block;min-width:44px;min-height:44px;background:#e7eedb;border-radius:22px;font-size:13px}
+ .app .mode-menu{display:none;position:absolute;left:0;top:calc(100% + 8px);padding:6px;border:1px solid var(--scene-border);border-radius:22px;background:#f5f9eaf5;box-shadow:var(--scene-shadow);white-space:nowrap}
+ .app .scene-toolbar.mode-open .mode-menu{display:flex;align-items:center;gap:5px}.app .mode-switch button{min-width:52px}
+ .app .season-switch{display:none;position:absolute;left:0;top:calc(100% + 8px);padding:6px;border:1px solid var(--scene-border);border-radius:22px;background:#f5f9eaf5;box-shadow:var(--scene-shadow)}
+ .app .scene-toolbar.season-open .season-switch{display:flex}.app .season-switch button{min-width:44px}
+ .app .map-controls,.app.has-card .map-controls{bottom:84px}
+ .app.search-open .map-controls,.app.mode-menu-open .map-controls,.app.season-menu-open .map-controls{visibility:hidden}
+ body[data-screen="map"] .guide-companion{top:100px;bottom:auto;left:18px;width:44px;height:74px}
+ body[data-screen="map"] .guide-character,body[data-screen="map"] .guide-character>img{width:44px;height:74px}
+ body[data-screen="map"] .guide-bubble{left:50px;bottom:0;width:176px;padding:9px 11px}
+}
+@media(prefers-reduced-motion:reduce){.app .place-card,.app .detail-dialog{animation:none}.app .hotspot .pin-icon,.app .hotspot .pin-label{transition:none}}

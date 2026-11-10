@@ -1,0 +1,37 @@
+/* Additive visual layer. Original styles and the independent 3D view stay intact. */
+:root {
+  --scene-glass: rgba(251, 253, 241, .78);
+  --scene-border: rgba(218, 201, 153, .64);
+  --scene-shadow: 0 12px 32px rgba(40, 72, 53, .11);
+  --scene-radius: 18px;
+  --scene-gap: 12px;
+  --scene-gold: #c2a464;
+}
+.app .map-art { image-rendering: auto; filter: none; }
+.app[data-mode="panorama"] .map-art { filter: none; }
+.app .map-viewport::after {
+  background: linear-gradient(90deg,rgba(243,246,233,.52),transparent 30%),
+    linear-gradient(0deg,rgba(236,243,228,.3),transparent 20%);
+}
+.welcome .welcome-landscape { filter: none; }
+.scene-camera { position:absolute;inset:0;width:1600px;height:1000px;transform-origin:50% 50%; }
+.scene-depth { position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden; }
+.scene-region { position:absolute;pointer-events:none;transition:transform .6s ease-out; }
+.app .hotspots { z-index:5; }
+.app .scene-interactions { z-index:4; }
+.app .map-fallback { z-index:8; }
+@media(prefers-reduced-motion:reduce) { .scene-region { transition:none; } }
+.scene-water,.scene-effects{position:absolute;inset:0;width:1600px;height:1000px;pointer-events:none;z-index:2}
+.scene-water{overflow:hidden;mask-size:100% 100%;-webkit-mask-size:100% 100%;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;opacity:.25}
+.water-flow{position:absolute;inset:0 -128px 0 0;background:url('assets/water-sheen.svg') repeat;animation:river-flow 48s linear infinite;will-change:transform}
+.scene-effects{z-index:3}.app #scene-motion-toggle{display:grid;place-items:center;width:44px;padding:0;border-radius:50%;flex-shrink:0}.app #scene-motion-toggle .icon{width:18px;height:18px}
+.scene-fx-paused .water-flow,.scene-fx-paused .app .hotspot.selected::before{animation-play-state:paused}
+.app .water-target{width:44px;height:44px;background:transparent;border:0;opacity:0;transform:translate(-50%,-50%) scale(var(--inverse-scale,1))}
+.app .lantern-target{width:44px;height:44px;transform:translate(-50%,-50%) scale(var(--inverse-scale,1));transform-origin:center}
+.app .lantern-target::after{content:'';display:block;margin:auto;width:10px;height:15px;background:linear-gradient(#e9c48b,#d99d5b);border:1px solid #e6c182;border-radius:5px;box-shadow:0 0 9px #e3bb6670;transform-origin:center top}
+.app .lantern-target.swing::after{animation:lantern-sway .65s ease-in-out 2}
+body[data-screen="map"] .guide-companion.wave .guide-character{animation:guide-greet .9s ease-in-out}
+.guide-companion.search-obscured,.guide-companion.season-obscured{visibility:hidden}
+@keyframes river-flow{to{transform:translate3d(-128px,0,0)}}
+@keyframes lantern-sway{0%,100%{transform:rotate(0)}25%{transform:rotate(12deg)}75%{transform:rotate(-12deg)}}
+@media(prefers-reduced-motion:reduce){.water-flow,.app .hotspot.selected::before{animation:none}.scene-effects{opacity:.7}}

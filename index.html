@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=yes">
+  <meta name="theme-color" content="#edf0e5">
+  <meta name="description" content="凤凰古城绿色数字漫游地图。沿着沱江，探索古城的风景与人文。当前为位置待核实的示意地图。">
+  <title>凤凰古城 · 绿色数字漫游</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="experience.css">
+  <link rel="stylesheet" href="scene-upgrade.css">
+  <link rel="stylesheet" href="scene-ui.css">
+  <link rel="stylesheet" href="scene-refine.css">
+  <link rel="stylesheet" href="bridge3d.css">
+  <script defer src="data/places.js"></script>
+  <script defer src="app.js"></script>
+  <script defer src="scenes.js"></script>
+  <script defer src="scene-assets.js"></script>
+  <script defer src="scene-refinements.js"></script>
+  <script defer src="exploration-scenes.js"></script>
+  <script defer src="bridge3d.js"></script>
+  <script defer src="experience.js"></script>
+  <script defer src="scene-layers.js"></script>
+  <script defer src="scene-ui.js"></script>
+  <script defer src="scene-effects.js"></script>
+</head>
+<body data-screen="landing" data-mode="explore" data-season="spring">
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 5 6-2 6 3 6-2v15l-6 2-6-3-6 2V5Z"/><path d="M9 3v15M15 6v15"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M8 5h8a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h8"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+    <symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 3C7 1 1 10 7 17c6 6 14 0 13-14Z"/><path d="m4 21 11-11"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-temple" viewBox="0 0 24 24"><path d="m3 8 9-5 9 5M4 9h16M6 10v8m6-8v8m6-8v8M3 20h18M2 7l1 2m19-2-1 2"/></symbol>
+    <symbol id="i-water" viewBox="0 0 24 24"><path d="M2 7c3-4 5 4 9 0s6 4 11 0M2 12c3-4 5 4 9 0s6 4 11 0M2 17c3-4 5 4 9 0s6 4 11 0"/></symbol>
+    <symbol id="i-wall" viewBox="0 0 24 24"><path d="M3 5h4v4h3V5h4v4h3V5h4v16H3V5Z"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></symbol>
+  </defs></svg>
+  <section class="welcome" id="welcome" aria-labelledby="welcome-title">
+    <img class="welcome-landscape" src="assets/scene-spring.webp" alt="沱江与古城山水艺术场景" fetchpriority="high">
+    <div class="welcome-wash"></div><div class="petals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <header class="welcome-header"><a class="wordmark" href="#" aria-label="凤凰古城首页"><span>凤凰古城<i>湘西</i></span><small>FENGHUANG ANCIENT TOWN</small><em>把目光，留在两岸。</em></a><nav class="welcome-nav" aria-label="体验导航"><span class="current">⌂ &nbsp; 古城漫游</span><span>山水相逢 · 低碳同行</span></nav><button class="round-button fullscreen-button" aria-label="进入全屏" title="进入全屏">⛶</button></header>
+    <div class="welcome-intro"><p class="spaced-label">A SLOW JOURNEY THROUGH FENGHUANG</p><h1 id="welcome-title">选择你的探索模式</h1><p class="welcome-subtitle"><span></span>以不同的方式，遇见不一样的凤凰<span></span></p></div>
+    <div class="mode-cards">
+      <button class="mode-card cinematic" data-enter-mode="panorama" aria-label="开启全景之旅，写实光影风格"><img src="assets/preview-cinematic.webp" alt="黛瓦与暖色光影中的古城全景"><span class="mode-card-shade"></span><span class="mode-top"><span class="mode-symbol">◈</span><span><b>全景模式</b><small>沉浸式山水画卷，感受古城之美</small></span></span><span class="mode-bottom"><span class="mode-tags">写实光影 <i>·</i> 山水长卷</span><span class="enter-label">开启全景之旅 <span>→</span></span></span><span class="corner-ornament" aria-hidden="true">✦</span></button>
+      <button class="mode-card fresh" data-enter-mode="explore" aria-label="进入探索地图，清新明丽风格"><img src="assets/preview-spring.webp" alt="花木与碧水环绕的清新古城"><span class="mode-card-shade"></span><span class="recommended">✿ &nbsp; 推荐</span><span class="mode-top"><span class="mode-symbol">❀</span><span><b>探索模式</b><small>自由探索古城，发现更多精彩</small></span></span><span class="mode-bottom"><span class="mode-tags">清新明丽 <i>·</i> 漫游四季</span><span class="enter-label">进入探索地图 <span>→</span></span></span><span class="corner-ornament" aria-hidden="true">✦</span></button>
+    </div>
+    <div class="welcome-footer"><span class="footer-leaf">❧</span><span>低碳出行 · 守护古城的诗意与绿意</span><span class="footer-separator"></span><small>轻触风景，慢慢遇见</small></div>
+    <p class="welcome-note">艺术场景示意 · 景点位置待核实</p><p class="rotate-hint">↻ 横屏游览，山水更开阔</p>
+  </section>
+  <main class="app" id="app" inert>
+    <section class="map-viewport" id="map" aria-label="凤凰古城交互示意地图，可拖动及双指缩放" tabindex="0">
+      <div class="map-world" id="map-world">
+        <div class="scene-camera" id="scene-camera">
+        <img class="map-art" id="map-art" src="assets/scene-spring.webp" width="1600" height="1000" alt="凤凰古城2.5D艺术场景，地形与景点位置待核实" draggable="false">
+        <div class="scene-depth" id="scene-depth" aria-hidden="true"></div>
+        <div class="scene-water" id="scene-water" aria-hidden="true" hidden><div class="water-flow"></div></div>
+        <canvas id="scene-effects" class="scene-effects" width="960" height="600" aria-hidden="true"></canvas>
+        <div id="scene-occlusion" class="scene-occlusion" aria-hidden="true"></div>
+        <div class="map-fallback" id="map-fallback" hidden><span>凤凰古城</span><p>底图暂时无法显示，仍可选择景点了解古城。</p><button id="retry-map" type="button">重新加载底图</button></div>
+        <div id="hotspots" class="hotspots"></div>
+        <div id="scene-interactions" class="scene-interactions"></div>
+        <span class="world-label river-label" style="left:1075px;top:860px">沱 江 <small>TUOJIANG RIVER</small></span>
+        <span class="world-label town-label" style="left:590px;top:540px">凤 凰 古 城<small>FENGHUANG OLD TOWN</small></span>
+        </div>
+      </div>
+    </section>
+
+    <header class="header">
+      <div class="identity"><span class="brand-seal" aria-hidden="true">凤<br>凰</span><div><p class="eyebrow">湘西 · 湖南 <span></span> 绿色数字漫游</p><h1>凤凰古城</h1></div><span class="edition">古城漫游<br><b>VOL. 01</b></span></div>
+      <p class="literary-title">把目光，留在两岸。</p>
+      <div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input id="search" type="search" placeholder="寻找一处风景" aria-label="搜索五个景点" autocomplete="off" maxlength="40"><kbd aria-hidden="true">⌕</kbd></div>
+      <div class="filters" role="group" aria-label="景点分类"><button class="filter active" data-filter="all" aria-pressed="true">全部 <span>05</span></button><button class="filter" data-filter="culture" aria-pressed="false">文化</button><button class="filter" data-filter="nature" aria-pressed="false">自然</button><button class="filter" data-filter="history" aria-pressed="false">历史</button></div>
+      <div class="search-results glass" id="search-results" hidden></div>
+    </header>
+    <div class="scene-toolbar glass"><button id="choose-mode">‹ 选择模式</button><div class="mode-switch" role="group" aria-label="场景风格"><button data-mode="panorama" aria-pressed="false">全景</button><button data-mode="explore" class="active" aria-pressed="true">探索</button></div><span class="toolbar-line"></span><div class="season-switch" role="group" aria-label="古城四季"><button data-season="spring" class="active" aria-pressed="true"><span>❀</span>春</button><button data-season="summer" aria-pressed="false"><span>☀</span>夏</button><button data-season="autumn" aria-pressed="false"><span>❧</span>秋</button><button data-season="winter" aria-pressed="false"><span>❄</span>冬</button></div></div>
+    <button class="map-fullscreen round-button fullscreen-button" aria-label="进入全屏">⛶</button>
+    <div class="season-caption" id="season-caption"><span>SPRING · 春</span><b>一江春水，两岸花开。</b></div>
+
+    <aside class="travel-note"><span class="note-line"></span><span>一座古城，一江往事。</span><small>EXPLORE AT YOUR OWN PACE</small></aside>
+    <div class="map-badge glass"><span class="status-dot"></span>2.5D 古城漫游 <span class="badge-divider"></span><span>艺术示意 · 位置待核实</span></div>
+    <div class="map-controls glass" aria-label="地图控制"><button id="locate" aria-label="回到初始视角" title="回到初始视角"><svg class="icon"><use href="#i-locate"/></svg></button><span class="control-divider"></span><button id="zoom-in" aria-label="放大地图" title="放大地图"><span class="plus">+</span></button><button id="zoom-out" aria-label="缩小地图" title="缩小地图"><span class="minus">−</span></button><span class="control-divider"></span><button id="reset" aria-label="复位地图" title="复位地图"><svg class="icon"><use href="#i-reset"/></svg></button></div>
+    <div class="orientation" aria-hidden="true"><b>N</b><svg width="38" height="44" viewBox="0 0 38 44"><path d="m19 3 10 30-10-7-10 7Z" fill="#3d6359"/><path d="m19 3 0 23-10 7Z" fill="#a2b6a5"/></svg><span>斜俯视 · 示意</span></div>
+
+    <section class="place-card glass" id="place-card" aria-label="景点介绍" hidden></section>
+    <button class="explore-prompt glass" id="explore-prompt" hidden><span class="prompt-icon"><svg class="icon"><use href="#i-leaf"/></svg></span><span><b>沿着沱江，发现凤凰</b><small>轻触地图上的标记，开启古城漫游</small></span><svg class="icon"><use href="#i-arrow"/></svg></button>
+    <div class="bottom-bar"><div class="map-caption"><span class="leaf-dot"><svg class="icon"><use href="#i-leaf"/></svg></span><span>让脚步慢下来<small>LOW-CARBON EXPLORATION</small></span></div><nav class="bottom-nav glass" aria-label="底部导航"><button class="nav-item active" aria-current="page" id="nav-map"><svg class="icon"><use href="#i-map"/></svg><span>地图</span><i></i></button><button class="nav-item" data-pending="路线" aria-label="路线，暂未开放"><svg class="icon"><use href="#i-route"/></svg><span>路线</span><small>待开放</small></button><button class="nav-item" data-pending="文化" aria-label="文化，暂未开放"><svg class="icon"><use href="#i-book"/></svg><span>文化</span><small>待开放</small></button><button class="nav-item" data-pending="我的" aria-label="我的，暂未开放"><svg class="icon"><use href="#i-user"/></svg><span>我的</span><small>待开放</small></button></nav><span class="gesture-hint" id="gesture-hint">拖动探索 · 双指缩放<small>5 处风景，等你停留</small></span></div>
+    <div class="toast glass" id="toast" role="status" aria-live="polite" hidden></div>
+    <dialog class="detail-dialog" id="details" aria-labelledby="detail-title"><div id="detail-content"></div><button class="dialog-close" id="close-details" aria-label="关闭详情"><svg class="icon"><use href="#i-close"/></svg></button></dialog>
+    <noscript><div class="noscript">请启用 JavaScript 以拖动地图和查看景点。当前底图为位置待核实的示意地图。</div></noscript>
+  </main>
+  <aside class="guide-companion" id="guide-companion" aria-label="古城导览角色"><button class="guide-character" id="guide-character" aria-label="向导招手，重看景点介绍"><img src="assets/guide.webp" alt="身穿浅绿衣裙的古城导览角色"><img class="guide-arm" src="assets/guide-arm.webp" alt="" aria-hidden="true"><span class="guide-name">你的古城向导</span></button><div class="guide-bubble" id="guide-bubble"><button id="guide-close" aria-label="收起导览文字">×</button><span class="guide-kicker">山水相逢，幸会呀</span><p id="guide-text" aria-live="polite">选一种喜欢的风景，<br>我们一起，慢慢走进凤凰。</p></div></aside>
+  <section class="bridge-view" id="bridge-view" hidden aria-label="虹桥3D深入探索"><div id="bridge-canvas"></div><div class="bridge-vignette"></div><header class="bridge-header"><button id="bridge-back" class="glass">← 返回地图</button><div><h1>虹桥</h1><p>沱江之上的风景，也是凤凰的心脏。</p></div><button class="round-button fullscreen-button" aria-label="进入全屏">⛶</button></header><div class="time-switch glass" aria-label="虹桥时光切换"><button data-time="dawn" aria-pressed="false">◒<span>清晨</span></button><button data-time="day" class="active" aria-pressed="true">☀<span>白天</span></button><button data-time="dusk" aria-pressed="false">◓<span>黄昏</span></button><button data-time="night" aria-pressed="false">☾<span>夜晚</span></button></div><div class="bridge-location"><span>HONGQIAO · IMMERSIVE JOURNEY</span><h2 id="bridge-location-title">临水望虹桥</h2><p id="bridge-location-desc">把脚步放慢，让一江风景靠近。</p></div><div class="bridge-help glass"><span>单指转动视角 · 双指拉近</span><small>外观样段 · 非实测复原</small></div><nav class="bridge-stops glass" aria-label="虹桥观察位置"><button data-stop="bank" class="active" aria-pressed="true"><small>01</small>河岸</button><span>—</span><button data-stop="entrance" aria-pressed="false"><small>02</small>桥头</button><span>—</span><button data-stop="detail" aria-pressed="false"><small>03</small>廊窗</button><button data-stop="arch" aria-pressed="false"><small>04</small>桥下</button><button data-stop="deck" aria-pressed="false"><small>05</small>桥上</button><button id="bridge-reset" aria-label="复位3D视角">↺</button></nav><p id="bridge-asset-note" class="bridge-asset-note" hidden>部分材质暂未加载，已显示基础外观。</p><div class="bridge-loading glass" id="bridge-loading" role="status">正在走近虹桥…</div><div class="bridge-error glass" id="bridge-error" hidden><h2>暂时无法打开3D场景</h2><p id="bridge-error-message">可返回地图继续漫游，或重新加载场景。</p><button id="bridge-retry">重新加载</button><button id="bridge-error-back">返回地图</button></div></section>
+  <div class="scene-loading" id="scene-loading" hidden role="status">正在铺开这一季的山水…</div>
+</body>
+</html>

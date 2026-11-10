@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="68" viewBox="0 0 140 68">
+<defs><linearGradient id="wood" x2="0" y2="1"><stop stop-color="#9c8760"/><stop offset="1" stop-color="#493d31"/></linearGradient><linearGradient id="roof" x2="0" y2="1"><stop stop-color="#4c6668"/><stop offset="1" stop-color="#263b3f"/></linearGradient></defs>
+<ellipse cx="69" cy="58" rx="62" ry="5" fill="#152d33" opacity=".35"/>
+<path d="M5 40 Q32 59 126 46 L138 36 Q130 61 107 62 L40 56 Q14 53 5 40Z" fill="#3f3328"/><path d="M5 40 Q65 49 138 36 L123 47 35 50Z" fill="url(#wood)" stroke="#aa9367"/>
+<path d="m36 26 60 4 24 16-82-3Z" fill="#624c35"/><g stroke="#aa9470" stroke-width="2"><path d="M40 25v21m18-19v21m20-20v21m20-18v18m18-17v16"/><path d="m38 38 80 6m-78-2 78 6"/></g>
+<path d="m29 23 64-5 35 15-65 4Z" fill="url(#roof)" stroke="#a1a291"/><path d="m29 23 34 10 65 0-1 4-64 3Z" fill="#25383b"/><g stroke="#91a4a3" opacity=".3"><path d="m40 23 33 10m-22-11 32 11m-21-12 31 12m-21-13 31 13m-21-14 31 14"/></g>
+<path d="M23 25v20" stroke="#927e5d" stroke-width="2"/><ellipse cx="23" cy="31" rx="4" ry="6" fill="#d9b36b"/><path d="M19 25h8m-8 12h8" stroke="#6f5432"/>
+</svg>

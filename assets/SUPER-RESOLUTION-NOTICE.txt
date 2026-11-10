@@ -1,0 +1,15 @@
+Round two image derivatives, 2026-11-10
+
+Original source: existing project scene-*-source.png, 1024x1024.
+Identical crop: (0, 140, 1024, 780); effective native detail 1024x640.
+Method: offline EDSR x2 (non-GAN) learned super-resolution; original Cb/Cr retained.
+No generative scene editing, additional sharpening, noise or global contrast filter.
+These are INFERRED contours, not new measured or recovered architectural facts.
+All original and round-one source assets remain in this project.
+
+Model repository: https://github.com/Saafke/EDSR_Tensorflow
+Model file: https://github.com/Saafke/EDSR_Tensorflow/blob/master/models/EDSR_x2.pb
+Repository license: Apache-2.0; see vendor/EDSR-LICENSE.txt.
+Weights are used only in an optional offline build; not shipped or loaded by H5.
+OpenCV dnn_superres: https://docs.opencv.org/4.x/d5/d29/tutorial_dnn_superres_upscale_image_single.html
+Per-model SHA-256 and asset bounds: assets/scene-round2-manifest.json.

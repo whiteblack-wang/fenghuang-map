@@ -61,3 +61,31 @@
 @media(max-height:650px) and (orientation:portrait) {
   .bridge-view[data-scene="wanming"] .bridge-location {display:none;}
 }
+/* Residence: fixed daylight and an overflow strip for close architectural views. */
+.bridge-view .time-switch[hidden]{display:none!important;}
+.bridge-view[data-scene="shencongwen"] .bridge-vignette{background:linear-gradient(180deg,#14232138,transparent 23%,transparent 80%,#14261f55);}
+.bridge-view[data-scene="shencongwen"] .bridge-stops{width:min(780px,calc(100% - 24px));max-width:calc(100% - 24px);justify-content:flex-start;overflow:hidden;}
+.bridge-view[data-scene="shencongwen"] .bridge-stop-options{display:flex;flex:1;min-width:0;gap:5px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#b7c596 transparent;}
+.bridge-view[data-scene="shencongwen"] .bridge-stops button{flex:1 0 auto;min-width:64px;min-height:44px;font-size:12px;}
+.bridge-view[data-scene="shencongwen"] .bridge-stops #bridge-reset{flex:0 0 44px;background:#254b3a;color:#f1e5b8;}
+.bridge-view[data-scene="shencongwen"] .bridge-location{max-width:58%;}
+.bridge-view[data-scene="shencongwen"] .bridge-location p{line-height:1.7;max-width:550px;}
+.bridge-view[data-scene="shencongwen"] .bridge-help{font-size:10px;}
+@media(max-width:600px) and (orientation:portrait){
+ .bridge-view[data-scene="shencongwen"] .bridge-header>div{top:55px;}
+ .bridge-view[data-scene="shencongwen"] .bridge-header h1{font-size:25px;letter-spacing:4px;}
+ .bridge-view[data-scene="shencongwen"] .bridge-location{left:18px;right:18px;bottom:125px;max-width:none;}
+ .bridge-view[data-scene="shencongwen"] .bridge-location>span{display:none;}
+ .bridge-view[data-scene="shencongwen"] .bridge-location h2{font-size:19px;letter-spacing:2px;margin:5px 0;}
+ .bridge-view[data-scene="shencongwen"] .bridge-location p{font-size:11px;line-height:1.65;margin:0;}
+ .bridge-view[data-scene="shencongwen"] .bridge-help{bottom:81px;font-size:10px;}
+ .bridge-view[data-scene="shencongwen"] .bridge-help small{display:block;margin:4px 0 0;font-size:9px;}
+ .bridge-view[data-scene="shencongwen"] .bridge-stops{padding:5px;gap:5px;}
+ .bridge-view[data-scene="shencongwen"] .bridge-stop-options{gap:3px;scrollbar-width:none;}
+ .bridge-view[data-scene="shencongwen"] .bridge-stops button{flex:0 0 52px;min-width:52px;font-size:11px;}
+}
+@media(max-height:500px) and (orientation:landscape){
+ .bridge-view[data-scene="shencongwen"] .bridge-location{bottom:78px;max-width:55%;}
+ .bridge-view[data-scene="shencongwen"] .bridge-help{top:auto;bottom:77px;left:auto;right:18px;padding:7px 10px;max-width:42%;font-size:9px;}
+ .bridge-view[data-scene="shencongwen"] .bridge-header p{font-size:9px;}
+}

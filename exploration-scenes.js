@@ -16,6 +16,20 @@
       eaves:{pos:[6,20,10],look:[0,18.7,0],title:'仰望飞檐',desc:'外部观察 · 六角层檐与灰瓦细部',min:6,max:22,angle:.45,tilt:.22},
       window:{pos:[3.7,8.4,7.6],look:[0,8,0],title:'近看拱窗',desc:'外部观察 · 拱窗、砖石与浅色线脚',min:5.5,max:17,angle:.35,tilt:.18},
       riverside:{pos:[-30,12,43],look:[0,13,0],title:'沿岸观塔',desc:'外部观察 · 塔身与临水环境',min:32,max:110,angle:.5,tilt:.18}
-    }}
+    }},
+    shencongwen:{title:'沈从文故居',quote:'在一方院落里，遇见文字中的湘西。',english:'SHEN CONGWEN RESIDENCE',modelScript:'shencongwen-model.js?v=1',modelGlobal:'FenghuangShencongwenModel',fixedTime:'day',water:false,scrollStops:true,bankAspect:.62,
+      note:'依据参考照片制作 · 非实测复原',help:'单指近看 · 双指缩放 · 下方滑动选景',
+      lighting:{ambient:.68,ambientColor:'#f2ece0',hemiPower:2.3,hemiColor:'#f4f0e5',groundColor:'#776857',sunPower:2.1,skyColor:'#d5e2e7',exposure:1.13,shadowSize:12,sunTarget:[0,1.7,-3],fills:[{position:[0,3.2,-4.5],color:'#fff4df',intensity:18,distance:13},{position:[0,2.8,1],color:'#edf2ef',intensity:10,distance:13}]},
+      points:[],labels:['天井','堂屋','桌椅','书画','门窗','匾额','砖石','灰瓦'],stops:{
+        bank:{pos:[5.6,4,11],look:[0,1.8,-2.4],title:'天井望堂屋',desc:'青砖、木窗与一方天井，保留照片可见的院落关系。',min:8,max:45,angle:.36,tilt:.17,minHeight:2},
+        hall:{pos:[0,1.92,-2.95],look:[0,1.8,-7.8],fov:60,portraitFov:82,title:'走进堂屋',desc:'近看木梁、砖地、两侧座椅与堂屋陈设。',min:3.8,max:5.1,angle:.16,tilt:.16,minHeight:1.2},
+        furniture:{pos:[-.4,1.63,-4.9],look:[-2.85,1.03,-5.7],portraitFov:68,title:'桌椅与木作',desc:'扶手、靠背、横枨与桌沿均为立体构件。',min:1.6,max:2.9,angle:.25,tilt:.2,minHeight:.8},
+        art:{pos:[0,2.25,-4.65],look:[0,2.3,-8.45],portraitFov:85,title:'书画与陈设',desc:'门匾与书画取自参考照片；肖像陈列的雕塑细节为示意。',min:2.9,max:4.15,angle:.18,tilt:.17,minHeight:1.25},
+        lattice:{pos:[3,2.2,.5],look:[2.9,2.1,-2.4],portraitFov:76,title:'木门与花窗',desc:'通透花格、门板木纹与砖墙窗台，可拖动近看。',min:1.9,max:3.6,angle:.25,tilt:.22,minHeight:1},
+        plaque:{pos:[.25,3.55,.9],look:[0,3.45,-2.4],portraitFov:70,title:'沈从文故居门匾',desc:'使用参考照片校正透视的原有门匾，保留文字与旧木色。',min:2,max:4.2,angle:.22,tilt:.2,minHeight:2.7},
+        masonry:{pos:[2.25,1.22,.8],look:[2.25,.53,-2.2],portraitFov:65,title:'砖墙与地砖',desc:'砖缝、石板接缝与磨损材质，构成近看的细部。',min:1.8,max:3.4,angle:.23,tilt:.22,minHeight:.65},
+        roof:{pos:[6.3,5.8,1.7],look:[3,4.2,-3.2],portraitFov:65,title:'灰瓦与檐口',desc:'弧形筒瓦、瓦当与木檐，依据照片中的构造特征表现。',min:3.7,max:7.4,angle:.24,tilt:.2,minHeight:3.8}
+      }
+    }
   });
 })();

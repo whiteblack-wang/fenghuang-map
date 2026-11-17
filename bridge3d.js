@@ -5,6 +5,7 @@
   if(!root||!mount)return;
   const loading=document.getElementById('bridge-loading'),error=document.getElementById('bridge-error');
   const state={time:'dusk',stop:'bank',placeId:'hongqiao',ready:false,open:false};
+  let exteriorTime=state.time;
   const scripts=new Map();let ctx=null,generation=0,returnFocus=null,lastStats=null;
   const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
   const profiles={
@@ -32,7 +33,7 @@
   }
   function release(c){
     if(!c||c.disposed)return;c.disposed=true;cancelAnimationFrame(c.raf);c.events.abort();
-    c.water.dispose();disposeObject(c.scene);for(const t of c.skyTextures.values())t.dispose();
+    c.water?.dispose();disposeObject(c.scene);for(const t of c.skyTextures.values())t.dispose();
     c.renderer.renderLists.dispose();c.renderer.dispose();c.renderer.forceContextLoss();c.renderer.domElement.remove();
   }
   function close(){
@@ -45,15 +46,20 @@
     if(state.open&&state.placeId===placeId&&error.hidden)return;
     const next=scenes[placeId];
     if(!state.open)returnFocus=document.activeElement;
-    config=next;stops=next.stops;state.placeId=placeId;state.stop='bank';
+    config=next;stops=next.stops;state.placeId=placeId;state.stop=next.defaultStop||'bank';state.time=next.fixedTime||exteriorTime;
     root.dataset.scene=placeId;root.setAttribute('aria-label',`${next.title}3D深入探索`);
     root.querySelector('.bridge-header h1').textContent=next.title;
     root.querySelector('.bridge-header p').textContent=next.quote;
     root.querySelector('.bridge-location>span').textContent=`${next.english} · IMMERSIVE JOURNEY`;
     root.querySelector('.time-switch').setAttribute('aria-label',`${next.title}时光切换`);
+    root.querySelector('.time-switch').hidden=!!next.fixedTime;
+    root.querySelector('.bridge-help>span').textContent=next.help||'单指转动视角 · 双指拉近';
+    root.querySelector('.bridge-help>small').textContent=next.note||'外观样段 · 非实测复原';
     const nav=root.querySelector('.bridge-stops'),reset=document.getElementById('bridge-reset');
     nav.replaceChildren();nav.setAttribute('aria-label',`${next.title}观察位置`);
-    Object.keys(stops).forEach((key,i)=>{const b=document.createElement('button');b.dataset.stop=key;b.textContent=next.labels[i];b.setAttribute('aria-pressed','false');nav.append(b);});nav.append(reset);
+    const options=next.scrollStops?document.createElement('div'):nav;
+    if(options!==nav){options.className='bridge-stop-options';nav.append(options);}
+    Object.keys(stops).forEach((key,i)=>{const b=document.createElement('button');b.dataset.stop=key;b.textContent=next.labels[i];b.setAttribute('aria-pressed','false');options.append(b);});nav.append(reset);
     loading.textContent=`正在走近${next.title}…`;
     if(ctx){release(ctx);ctx=null;}
     const token=++generation;state.open=true;state.ready=false;
@@ -63,7 +69,7 @@
     try{
       if(!window.THREE)await script('vendor/three.min.js');
       if(!window[next.modelGlobal])await script(next.modelScript);
-      if(!window.FenghuangBridgeWater)await script('bridge-water.js');
+      if(next.water!==false&&!window.FenghuangBridgeWater)await script('bridge-water.js');
       if(token!==generation)return;
       const T=window.THREE;model=await window[next.modelGlobal].create(T);
       if(token!==generation){disposeObject(model.root);return;}
@@ -75,15 +81,17 @@
       scene.add(model.root);scene.fog=new T.Fog('#a1b6ad',62,180);
       const hemi=new T.HemisphereLight('#ddf0e7','#4d5145',2),sun=new T.DirectionalLight('#ffedd0',3),ambient=new T.AmbientLight('#d6e0d3',.3);
       sun.position.set(-24,35,24);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);
-      Object.assign(sun.shadow.camera,{left:-34,right:34,top:30,bottom:-22,near:1,far:130});
-      sun.shadow.bias=-.0004;sun.shadow.normalBias=.06;sun.target.position.set(0,7,0);
+      const shadowSize=next.lighting?.shadowSize;
+      Object.assign(sun.shadow.camera,shadowSize?{left:-shadowSize,right:shadowSize,top:shadowSize,bottom:-shadowSize,near:1,far:100}:{left:-34,right:34,top:30,bottom:-22,near:1,far:130});
+      sun.shadow.bias=-.0004;sun.shadow.normalBias=shadowSize ? .018 : .06;sun.target.position.set(...(next.lighting?.sunTarget||[0,7,0]));
       scene.add(hemi,sun,sun.target,ambient);
+      for(const fill of next.lighting?.fills||[]){const light=new T.PointLight(fill.color,fill.intensity,fill.distance,2);light.position.set(...fill.position);scene.add(light);}
       const points=[];for(const [x,y,z] of next.points){
         const light=new T.PointLight('#ffaf51',0,24,1.5);light.position.set(x,y,z);scene.add(light);points.push(light);
       }
       const sky=new T.Mesh(new T.SphereGeometry(230,32,20),new T.MeshBasicMaterial({color:'#cde5df',side:T.BackSide,depthWrite:false,fog:false,toneMapped:false}));
       sky.name='photographic-sky-only';sky.renderOrder=-10;scene.add(sky);
-      const water=window.FenghuangBridgeWater.create(T,renderer);scene.add(water.mesh);
+      const water=next.water===false?null:window.FenghuangBridgeWater.create(T,renderer);if(water)scene.add(water.mesh);
       partial={config:next,placeId,T,renderer,scene,camera,model,water,hemi,sun,ambient,points,sky,skyTextures:new Map(),skyLoads:new Map(),
         events:new AbortController(),disposed:false,raf:0,frame:0,lastFrame:0,elapsed:0,frameIntervals:[],target:new T.Vector3(),
         transition:null,orbit:null,pointers:new Map(),gesture:null,quality:'standard',dpr:Math.min(devicePixelRatio,1.5)};
@@ -122,22 +130,25 @@
     root.querySelectorAll('[data-stop]').forEach(b=>{b.classList.toggle('active',b.dataset.stop===stop);b.setAttribute('aria-pressed',String(b.dataset.stop===stop));});
     document.getElementById('bridge-location-title').textContent=stops[stop].title;
     document.getElementById('bridge-location-desc').textContent=stops[stop].desc;
-    if(!ctx)return;const {pos,look}=framePosition(stop);
+    if(!ctx)return;ctx.camera.fov=(ctx.camera.aspect<1?stops[stop].portraitFov:undefined)||stops[stop].fov||45;ctx.camera.updateProjectionMatrix();const {pos,look}=framePosition(stop);
     const bounds=new ctx.T.Spherical().setFromVector3(pos.clone().sub(look));ctx.orbitBounds={theta:bounds.theta,phi:bounds.phi};
     if(instant||matchMedia('(prefers-reduced-motion: reduce)').matches){ctx.camera.position.copy(pos);ctx.target.copy(look);ctx.camera.lookAt(look);ctx.transition=null;syncOrbit();}
     else ctx.transition={from:ctx.camera.position.clone(),fromLook:ctx.target.clone(),to:pos,toLook:look,start:performance.now(),duration:900};
     ctx.sun.shadow.needsUpdate=true;ctx.renderer.shadowMap.needsUpdate=true;
   }
   async function setTime(time){
+    time=config.fixedTime||time;
     if(!profiles[time])return;state.time=time;root.dataset.time=time;
+    if(!config.fixedTime)exteriorTime=time;
     root.querySelectorAll('[data-time]').forEach(b=>{b.classList.toggle('active',b.dataset.time===time);b.setAttribute('aria-pressed',String(b.dataset.time===time));});
     const c=ctx;if(!c)return;const p=profiles[time];
     c.scene.background=new c.T.Color(p.sky);c.scene.fog.color.set(p.fog);c.scene.fog.near=time==='day'?85:95;c.scene.fog.far=230;
-    c.sun.color.set(p.sun);c.sun.intensity=p.sunPower;c.sun.position.set(...p.sunPos);c.sun.shadow.needsUpdate=true;c.renderer.shadowMap.needsUpdate=true;
-    c.hemi.color.set(p.hemi);c.hemi.intensity=p.hemiPower;c.ambient.intensity=p.ambient;
+    c.sun.color.set(p.sun);c.sun.intensity=c.config.lighting?.sunPower??p.sunPower;c.sun.position.set(...p.sunPos);c.sun.shadow.needsUpdate=true;c.renderer.shadowMap.needsUpdate=true;
+    c.hemi.color.set(c.config.lighting?.hemiColor||p.hemi);c.hemi.groundColor.set(c.config.lighting?.groundColor||'#4d5145');c.hemi.intensity=c.config.lighting?.hemiPower??p.hemiPower;c.ambient.intensity=c.config.lighting?.ambient??p.ambient;c.ambient.color.set(c.config.lighting?.ambientColor||'#d6e0d3');
     c.points.forEach((l,i)=>l.intensity=p.lamps*(i<2?11:15));c.model.setLights(p.lamps);
-    c.water.setTime(p.water,p.sunPower);c.renderer.toneMappingExposure=p.exposure;
-    c.sky.material.color.set(p.sky);c.sky.material.map=null;c.sky.material.needsUpdate=true;
+    c.water?.setTime(p.water,p.sunPower);c.renderer.toneMappingExposure=c.config.lighting?.exposure??p.exposure;
+    c.sky.material.color.set(c.config.lighting?.skyColor||p.sky);c.sky.material.map=null;c.sky.material.needsUpdate=true;
+    if(!c.config.skyDirectory)return;
     try{
       if(!c.skyTextures.has(time)) {
         if(!c.skyLoads.has(time))c.skyLoads.set(time,new c.T.TextureLoader().loadAsync(`${c.config.skyDirectory}/sky-${time}.webp`));
@@ -149,7 +160,7 @@
   }
   function resize(reframe=true){
     if(!ctx)return;const width=root.clientWidth,height=root.clientHeight;
-    ctx.renderer.setSize(width,height);ctx.camera.aspect=width/Math.max(height,1);ctx.camera.updateProjectionMatrix();ctx.water.resize(width,height);
+    ctx.renderer.setSize(width,height);ctx.camera.aspect=width/Math.max(height,1);ctx.camera.updateProjectionMatrix();ctx.water?.resize(width,height);
     if(reframe!==false&&!ctx.gesture)setStop(state.stop,true);
   }
   function orbitApply(c){
@@ -180,11 +191,11 @@
     },{signal});
     function up(e){
       const p=c.pointers.get(e.pointerId);if(!p)return;
-      if(e.type==='pointerup'&&!p.moved&&!p.multi){
+      if(c.water&&e.type==='pointerup'&&!p.moved&&!p.multi){
         const rect=canvas.getBoundingClientRect(),ray=new c.T.Raycaster();
         ray.setFromCamera(new c.T.Vector2((e.clientX-rect.left)/rect.width*2-1,1-(e.clientY-rect.top)/rect.height*2),c.camera);
-        const hits=ray.intersectObjects([c.model.root,c.water.mesh],true);
-        if(hits[0]?.object===c.water.mesh)c.water.hit(hits[0].point,c.elapsed);
+        const hits=ray.intersectObjects(c.water?[c.model.root,c.water.mesh]:[c.model.root],true);
+        if(c.water&&hits[0]?.object===c.water.mesh)c.water.hit(hits[0].point,c.elapsed);
       }
       c.pointers.delete(e.pointerId);restartGesture();
     }
@@ -207,8 +218,8 @@
       c.camera.position.lerpVectors(m.from,m.to,ease);c.target.lerpVectors(m.fromLook,m.toLook,ease);c.camera.lookAt(c.target);
       if(q===1){c.transition=null;syncOrbit();}
     }
-    c.sky.position.copy(c.camera.position);c.model.update(c.elapsed);c.water.update(c.elapsed,c.camera);
-    c.renderer.info.reset();if(c.frame%2===0||c.transition)c.water.renderReflection(c.scene,c.camera);
+    c.sky.position.copy(c.camera.position);c.model.update(c.elapsed);c.water?.update(c.elapsed,c.camera);
+    c.renderer.info.reset();if(c.water&&(c.frame%2===0||c.transition))c.water.renderReflection(c.scene,c.camera);
     c.renderer.render(c.scene,c.camera);c.frame++;
     if(c.frame===100&&c.frameIntervals.length>50){
       const mean=c.frameIntervals.reduce((a,b)=>a+b,0)/c.frameIntervals.length;
@@ -224,7 +235,9 @@
       observedFps:mean?Math.round(10000/mean)/10:null,quality:c.quality,pixelRatio:c.dpr,
       camera:c.camera.position.toArray(),target:c.target.toArray(),missingAssets:[...c.model.missingAssets],
       towerScreen:c.model.towerBounds?.map(point=>{const p=new c.T.Vector3(...point).project(c.camera);return {x:(p.x+1)*root.clientWidth/2,y:(1-p.y)*root.clientHeight/2};}),
-      geometryIdentity:c.model.root.uuid,waterRippleTime:c.water.uniforms.rippleStart.value};
+      geometryIdentity:c.model.root.uuid,waterRippleTime:c.water?.uniforms.rippleStart.value??null,hasWater:!!c.water,
+      detailCounts:c.model.detailCounts,features:c.model.features,modelTriangles:c.model.triangleCount,
+      textureDimensions:c.model.detailCounts?Object.fromEntries(Object.entries(c.model.textures||{}).map(([key,value])=>[key,[value.image?.width,value.image?.height]])):undefined};
   }
   document.getElementById('bridge-back').addEventListener('click',close);
   document.getElementById('bridge-error-back').addEventListener('click',close);
@@ -237,5 +250,6 @@
   window.addEventListener('fenghuang:explore',e=>{if(!scenes[e.detail?.placeId])return;e.preventDefault();open(e.detail.placeId);});
   window.BridgeExperience=Object.freeze({open:()=>open('hongqiao'),close,setTime,setStop,getDiagnostics:diagnostics});
   window.WanmingExperience=Object.freeze({open:()=>open('wanming'),close,setTime,setStop,getDiagnostics:diagnostics});
+  window.ShencongwenExperience=Object.freeze({open:()=>open('shencongwen'),close,setTime,setStop,getDiagnostics:diagnostics});
   window.FenghuangExplorer=Object.freeze({open,close,setTime,setStop,getDiagnostics:diagnostics});
 })();
